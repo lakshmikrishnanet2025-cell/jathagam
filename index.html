@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<title>ஜாதகம் Bio Data</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<style>
+body{
+    margin:0;
+    background:#f5e1d3;
+    font-family:"Latha","Noto Sans Tamil",Arial;
+    color:#5a2d0c;
+}
+.container{
+    max-width:1100px;
+    margin:20px auto;
+    background:#fde9dc;
+    border:3px solid #8b4513;
+    padding:20px;
+}
+.top-actions{
+    text-align:right;
+    margin-bottom:10px;
+}
+button{
+    padding:8px 14px;
+    background:#8b4513;
+    color:white;
+    border:none;
+    border-radius:4px;
+    cursor:pointer;
+}
+.header{
+    display:flex;
+    gap:20px;
+}
+.left{flex:2}
+.right{flex:1;text-align:right}
+.photo-box{
+    width:230px;
+    height:300px;
+    border:2px solid #8b4513;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fff;
+    font-size:14px;
+    text-align:center;
+}
+.photo-box img{
+    max-width:100%;
+    max-height:100%;
+}
+table{width:100%;border-collapse:collapse}
+td{padding:6px}
+.label{width:150px;font-weight:bold}
+.section-title{
+    text-align:center;
+    font-size:22px;
+    margin:20px 0 10px;
+    font-weight:bold;
+}
+.footer{
+    text-align:center;
+    margin-top:15px;
+    font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="top-actions">
+        <button onclick="exportPDF()">📥 Export PDF</button>
+        <input type="file" accept="image/*,application/pdf" onchange="uploadPhoto(event)">
+    </div>
+</div>
+
+<div class="container" id="pdfContent">
+
+    <div class="header">
+        <div class="left">
+            <table>
+                <tr><td class="label">பெயர்</td><td>: A. R. Rahman</td></tr>
+                <tr><td class="label">பிறந்த தேதி</td><td>: 06-01-1965</td></tr>
+                <tr><td class="label">பிறந்த நேரம்</td><td>: 12:45 AM</td></tr>
+                <tr><td class="label">பிறந்த இடம்</td><td>: சென்னை</td></tr>
+                <tr><td class="label">பணி</td><td>: Music Director</td></tr>
+            </table>
+        </div>
+
+        <div class="right">
+            <div class="photo-box" id="photoBox">
+                Photo / PDF Upload
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title">ஜாதக விவரம்</div>
+    <table>
+        <tr><td class="label">ராசி</td><td>: மகரம்</td></tr>
+        <tr><td class="label">நட்சத்திரம்</td><td>: திருவோணம்</td></tr>
+        <tr><td class="label">லக்னம்</td><td>: துலாம்</td></tr>
+    </table>
+
+    <div class="footer">
+        இந்த ஜாதகம் onepagehoroscope.com மூலம் உருவாக்கப்பட்டது
+    </div>
+
+</div>
+
+<script>
+function uploadPhoto(event){
+    const file = event.target.files[0];
+    const box = document.getElementById("photoBox");
+    box.innerHTML = "";
+
+    if(!file) return;
+
+    if(file.type.startsWith("image/")){
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(file);
+        box.appendChild(img);
+    }
+    else if(file.type === "application/pdf"){
+        box.innerHTML = `
+            <div>
+                📄 PDF Uploaded<br>
+                <strong>${file.name}</strong>
+            </div>
+        `;
+    }
+    else{
+        box.innerHTML = "Invalid file";
+    }
+}
+
+function exportPDF(){
+    html2pdf().from(document.getElementById("pdfContent")).set({
+        filename:"jathagam.pdf",
+        margin:10,
+        html2canvas:{scale:2},
+        jsPDF:{unit:'mm',format:'a4'}
+    }).save();
+}
+</script>
+
+</body>
+</html>
