@@ -2,25 +2,34 @@
 <html lang="ta">
 <head>
 <meta charset="UTF-8">
-<title>ஜாதகம் Bio Data</title>
+<title>ஜாதகம்</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <style>
-/* ===== BASE ===== */
 body{
     margin:0;
-    background:#d7c5b4;
+    background:#d6c6b5;
     font-family:"Latha","Noto Sans Tamil",Arial;
     color:#4a1f14;
 }
-
-/* ===== A4 PAGE ===== */
+.actions{
+    width:794px;
+    margin:8px auto;
+    text-align:right;
+}
+.actions button{
+    padding:6px 12px;
+    background:#7a1e12;
+    color:#fff;
+    border:none;
+    cursor:pointer;
+}
 .page{
     width:794px;
     height:1123px;
-    margin:10px auto;
+    margin:0 auto;
     background:#fffaf4;
     border:3px double #7a1e12;
     padding:14px 18px;
@@ -28,40 +37,49 @@ body{
     overflow:hidden;
 }
 
-/* ===== ACTIONS ===== */
-.actions{
-    width:794px;
-    margin:6px auto;
-    text-align:right;
-}
-.actions button{
-    padding:5px 10px;
-    background:#7a1e12;
-    color:#fff;
-    border:none;
-    font-size:12px;
-    cursor:pointer;
-}
-
-/* ===== HEADER ===== */
+/* HEADER */
 .top-header{
     text-align:center;
     font-size:18px;
     font-weight:bold;
     color:#7a1e12;
     border-bottom:2px solid #7a1e12;
-    padding-bottom:4px;
     margin-bottom:6px;
+    padding-bottom:4px;
 }
 
-/* ===== LAYOUT ===== */
+/* TABLE */
+table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13px;
+}
+td{padding:3px; vertical-align:top;}
+.label{width:190px; font-weight:bold;}
+
+.editable{
+    border-bottom:1px dashed #7a1e12;
+    padding:1px 3px;
+}
+.editable:focus{outline:none;background:#fff0e8;}
+
+.section-title{
+    text-align:center;
+    font-size:15px;
+    font-weight:bold;
+    margin:6px 0 4px;
+    color:#7a1e12;
+    background:#f1dfd2;
+    border:1px solid #7a1e12;
+}
+
+/* PHOTO */
 .header{
     display:flex;
     gap:10px;
 }
 .left{flex:2}
 .right{flex:1;text-align:right}
-
 .photo-box{
     width:150px;
     height:190px;
@@ -73,57 +91,18 @@ body{
     background:#fff;
 }
 
-/* ===== TABLE ===== */
-table{
-    width:100%;
-    border-collapse:collapse;
-    font-size:13px;
-}
-td{
-    padding:3px;
-}
-.label{
-    width:180px;
-    font-weight:bold;
-}
-
-/* ===== EDITABLE ===== */
-.editable{
-    border-bottom:1px dashed #7a1e12;
-    padding:1px 3px;
-}
-.editable:focus{
-    outline:none;
-    background:#fff0e8;
-}
-
-/* ===== SECTION ===== */
-.section-title{
-    text-align:center;
-    font-size:15px;
-    font-weight:bold;
-    margin:6px 0 4px;
-    color:#7a1e12;
-    background:#f1dfd2;
-    border:1px solid #7a1e12;
-}
-
-/* ===== 13 BOX JATHAGAM ===== */
+/* JATHAGAM */
 .horoscope{
     display:flex;
-    justify-content:center;
+    justify-content:space-between;
     margin-top:6px;
 }
-
 .jathagam{
     width:260px;
     height:260px;
     border:2px solid #7a1e12;
     position:relative;
-    box-sizing:border-box;
 }
-
-/* outer boxes */
 .box{
     position:absolute;
     width:65px;
@@ -133,46 +112,26 @@ td{
     align-items:center;
     justify-content:center;
     font-size:11px;
-    text-align:center;
 }
-.box:focus{
-    outline:none;
-    background:#fff0e8;
-}
-
-/* positions (12 houses) */
-.b1{top:0;left:0}
-.b2{top:0;left:65px}
-.b3{top:0;left:130px}
-.b4{top:0;left:195px}
-
-.b5{top:65px;left:195px}
-.b6{top:130px;left:195px}
-
-.b7{top:195px;left:195px}
-.b8{top:195px;left:130px}
-.b9{top:195px;left:65px}
-.b10{top:195px;left:0}
-
-.b11{top:130px;left:0}
-.b12{top:65px;left:0}
-
-/* center */
+.box:focus{outline:none;background:#fff0e8;}
 .center-box{
     position:absolute;
-    top:65px;
-    left:65px;
-    width:130px;
-    height:130px;
+    top:65px; left:65px;
+    width:130px; height:130px;
     border:2px solid #7a1e12;
     display:flex;
     align-items:center;
     justify-content:center;
     font-weight:bold;
-    font-size:13px;
 }
 
-/* ===== FOOTER ===== */
+/* positions */
+.b1{top:0;left:0} .b2{top:0;left:65px} .b3{top:0;left:130px} .b4{top:0;left:195px}
+.b5{top:65px;left:195px} .b6{top:130px;left:195px}
+.b7{top:195px;left:195px} .b8{top:195px;left:130px}
+.b9{top:195px;left:65px} .b10{top:195px;left:0}
+.b11{top:130px;left:0} .b12{top:65px;left:0}
+
 .footer{
     text-align:center;
     margin-top:6px;
@@ -182,11 +141,8 @@ td{
     padding-top:4px;
 }
 
-/* ===== PRINT ===== */
 @media print{
-    body{background:#fff;}
     .actions{display:none;}
-    .page{margin:0;border:2px solid #000;}
 }
 </style>
 </head>
@@ -194,8 +150,8 @@ td{
 <body>
 
 <div class="actions">
-    <button onclick="exportPDF()">Export PDF</button>
-    <input type="file" accept="image/*,application/pdf" onchange="uploadPhoto(event)">
+<button onclick="exportPDF()">Export PDF</button>
+<input type="file" accept="image/*,application/pdf" onchange="uploadPhoto(event)">
 </div>
 
 <div class="page" id="pdfContent">
@@ -204,6 +160,7 @@ td{
 ஸ்ரீ அம்மன் துணை
 </div>
 
+<!-- BASIC DETAILS -->
 <div class="header">
 <div class="left">
 <table>
@@ -212,6 +169,10 @@ td{
 <tr><td class="label">பிறந்த தேதி</td><td>: <span class="editable" contenteditable></span></td></tr>
 <tr><td class="label">பிறந்த நேரம்</td><td>: <span class="editable" contenteditable></span></td></tr>
 <tr><td class="label">பிறந்த ஊர்</td><td>: <span class="editable" contenteditable></span></td></tr>
+<tr><td class="label">இருப்பிடம்</td><td>: <span class="editable" contenteditable></span></td></tr>
+<tr><td class="label">படிப்பு</td><td>: <span class="editable" contenteditable></span></td></tr>
+<tr><td class="label">பணி விவரங்கள்</td><td>: <span class="editable" contenteditable></span></td></tr>
+<tr><td class="label">மாத வருமானம்</td><td>: <span class="editable" contenteditable></span></td></tr>
 </table>
 </div>
 
@@ -220,32 +181,58 @@ td{
 </div>
 </div>
 
+<div class="section-title">தனிப்பட்ட & குடும்ப விவரம்</div>
+<table>
+<tr><td class="label">ஜாதி</td><td>: <span class="editable" contenteditable></span></td></tr>
+<tr><td class="label">குலம் / கோத்திரம் / வீடு</td><td>: <span class="editable" contenteditable></span></td></tr>
+<tr><td class="label">உயரம்</td><td>: <span class="editable" contenteditable></span></td></tr>
+<tr><td class="label">எடை</td><td>: <span class="editable" contenteditable></span></td></tr>
+<tr><td class="label">நிறம்</td><td>: <span class="editable" contenteditable></span></td></tr>
+
+<tr><td class="label">தந்தை பெயர்</td><td>: <span class="editable" contenteditable></span></td></tr>
+<tr><td class="label">தந்தை பணி விபரம்</td><td>: <span class="editable" contenteditable></span></td></tr>
+<tr><td class="label">உடன் பிறந்தவர்கள்</td><td>: <span class="editable" contenteditable></span></td></tr>
+<tr><td class="label">தொலைப்பேசி எண்</td><td>: <span class="editable" contenteditable></span></td></tr>
+<tr><td class="label">வாட்ஸ்ஆப் எண்</td><td>: <span class="editable" contenteditable></span></td></tr>
+<tr><td class="label">முகவரி</td><td>: <span class="editable" contenteditable></span></td></tr>
+<tr><td class="label">சொத்து விபரம்</td><td>: <span class="editable" contenteditable></span></td></tr>
+
+<tr><td class="label">தாய் பெயர்</td><td>: <span class="editable" contenteditable></span></td></tr>
+<tr><td class="label">தாய் பணி விபரம்</td><td>: <span class="editable" contenteditable></span></td></tr>
+</table>
+
+<div class="section-title">ஜாதக விவரம்</div>
+<table>
+<tr><td class="label">உதயாதி நாழிகை</td><td>: <span class="editable" contenteditable></span></td></tr>
+<tr><td class="label">சூர்ய உதயம்</td><td>: <span class="editable" contenteditable></span></td></tr>
+</table>
+
 <div class="section-title">ஜாதக கட்டம்</div>
 
 <div class="horoscope">
+
+<!-- RASI -->
 <div class="jathagam">
-
-<div class="box b1" contenteditable></div>
-<div class="box b2" contenteditable></div>
-<div class="box b3" contenteditable></div>
-<div class="box b4" contenteditable></div>
-
-<div class="box b5" contenteditable></div>
-<div class="box b6" contenteditable></div>
-
-<div class="box b7" contenteditable></div>
-<div class="box b8" contenteditable></div>
-<div class="box b9" contenteditable></div>
-<div class="box b10" contenteditable></div>
-
-<div class="box b11" contenteditable></div>
-<div class="box b12" contenteditable></div>
-
-<div class="center-box editable" contenteditable>
-ராசி
+<div class="box b1" contenteditable></div><div class="box b2" contenteditable></div>
+<div class="box b3" contenteditable></div><div class="box b4" contenteditable></div>
+<div class="box b5" contenteditable></div><div class="box b6" contenteditable></div>
+<div class="box b7" contenteditable></div><div class="box b8" contenteditable></div>
+<div class="box b9" contenteditable></div><div class="box b10" contenteditable></div>
+<div class="box b11" contenteditable></div><div class="box b12" contenteditable></div>
+<div class="center-box editable" contenteditable>ராசி</div>
 </div>
 
+<!-- NAVAMSA -->
+<div class="jathagam">
+<div class="box b1" contenteditable></div><div class="box b2" contenteditable></div>
+<div class="box b3" contenteditable></div><div class="box b4" contenteditable></div>
+<div class="box b5" contenteditable></div><div class="box b6" contenteditable></div>
+<div class="box b7" contenteditable></div><div class="box b8" contenteditable></div>
+<div class="box b9" contenteditable></div><div class="box b10" contenteditable></div>
+<div class="box b11" contenteditable></div><div class="box b12" contenteditable></div>
+<div class="center-box editable" contenteditable>நவாம்சம்</div>
 </div>
+
 </div>
 
 <div class="footer">
@@ -270,13 +257,12 @@ function uploadPhoto(e){
         box.innerHTML="PDF Uploaded";
     }
 }
-
 function exportPDF(){
     html2pdf().from(document.getElementById("pdfContent")).set({
         margin:[15,10,10,10],
         filename:"jathagam.pdf",
         html2canvas:{scale:2,scrollY:0},
-        jsPDF:{unit:"mm",format:"a4",orientation:"portrait"}
+        jsPDF:{unit:"mm",format:"a4"}
     }).save();
 }
 </script>
