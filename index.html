@@ -8,114 +8,148 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <style>
+/* ===== THEME ===== */
 body{
     margin:0;
-    background:#f5e1d3;
+    background:#eee;
     font-family:"Latha","Noto Sans Tamil",Arial;
-    color:#5a2d0c;
+    color:#3b1d0f;
 }
 .container{
-    max-width:1100px;
-    margin:20px auto;
-    background:#fde9dc;
-    border:3px solid #8b4513;
-    padding:20px;
+    max-width:800px;              /* single page width */
+    margin:15px auto;
+    background:#ffffff;
+    border:3px solid #7a1e12;
+    padding:16px;
 }
+
+/* ===== TOP HEADER ===== */
+.top-header{
+    text-align:center;
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:10px;
+    color:#7a1e12;
+}
+
+/* ===== ACTIONS ===== */
 .top-actions{
     text-align:right;
-    margin-bottom:10px;
+    margin-bottom:6px;
 }
 button{
-    padding:8px 14px;
-    background:#8b4513;
+    padding:6px 12px;
+    background:#7a1e12;
     color:#fff;
     border:none;
-    border-radius:4px;
+    border-radius:3px;
     cursor:pointer;
+    font-size:13px;
 }
+
+/* ===== LAYOUT ===== */
 .header{
     display:flex;
-    gap:20px;
+    gap:15px;
 }
 .left{flex:2}
 .right{flex:1;text-align:right}
+
 .photo-box{
-    width:230px;
-    height:300px;
-    border:2px solid #8b4513;
+    width:160px;
+    height:200px;
+    border:2px solid #7a1e12;
     background:#fff;
     display:flex;
     align-items:center;
     justify-content:center;
-    text-align:center;
+    font-size:12px;
 }
-.photo-box img{
-    max-width:100%;
-    max-height:100%;
-}
+
+/* ===== TABLE ===== */
 table{
     width:100%;
     border-collapse:collapse;
+    font-size:13px;
 }
 td{
-    padding:6px;
+    padding:4px;
     vertical-align:top;
 }
 .label{
     width:180px;
     font-weight:bold;
 }
+
+/* ===== EDITABLE ===== */
 .editable{
-    min-height:20px;
     padding:2px 4px;
-    border-bottom:1px dashed #8b4513;
+    border-bottom:1px dashed #7a1e12;
 }
 .editable:focus{
     outline:none;
-    background:#fff3e8;
+    background:#fff4ef;
 }
+
+/* ===== SECTION ===== */
 .section-title{
     text-align:center;
-    font-size:22px;
-    margin:20px 0 10px;
+    font-size:16px;
     font-weight:bold;
+    margin:8px 0 4px;
+    color:#7a1e12;
 }
+
+/* ===== HOROSCOPE ===== */
 .horoscope{
     display:flex;
-    gap:40px;
+    gap:20px;
     justify-content:center;
 }
 .chart{
-    width:300px;
-    height:300px;
-    border:2px solid #8b4513;
+    width:220px;
+    height:220px;
+    border:2px solid #7a1e12;
     display:grid;
     grid-template-columns:repeat(4,1fr);
     grid-template-rows:repeat(4,1fr);
 }
 .chart div{
-    border:1px solid #8b4513;
+    border:1px solid #7a1e12;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:14px;
+    font-size:11px;
     text-align:center;
-    padding:4px;
 }
 .chart div:focus{
     outline:none;
-    background:#fff3e8;
+    background:#fff4ef;
 }
 .center{
     grid-column:2/4;
     grid-row:2/4;
     font-weight:bold;
 }
+
+/* ===== FOOTER ===== */
 .footer{
     text-align:center;
-    margin-top:15px;
-    font-size:14px;
+    margin-top:8px;
+    font-size:12px;
     font-weight:bold;
+    color:#7a1e12;
+}
+
+/* ===== PRINT : SINGLE PAGE ===== */
+@media print{
+    body{background:#fff;}
+    .top-actions{display:none;}
+    .container{
+        margin:0;
+        border:2px solid #000;
+        page-break-after:avoid;
+    }
 }
 </style>
 </head>
@@ -123,13 +157,19 @@ td{
 <body>
 
 <div class="container">
-    <div class="top-actions">
-        <button onclick="exportPDF()">📥 Export PDF</button>
-        <input type="file" accept="image/*,application/pdf" onchange="uploadPhoto(event)">
-    </div>
+
+<!-- TOP HEADER -->
+<div class="top-header editable" contenteditable="true">
+ஸ்ரீ அம்மன் துணை
 </div>
 
-<div class="container" id="pdfContent">
+<!-- ACTIONS -->
+<div class="top-actions">
+    <button onclick="exportPDF()">Export PDF</button>
+    <input type="file" accept="image/*,application/pdf" onchange="uploadPhoto(event)">
+</div>
+
+<div id="pdfContent">
 
 <!-- BASIC DETAILS -->
 <div class="header">
@@ -139,16 +179,16 @@ td{
 <tr><td class="label">பாலினம்</td><td>: <span class="editable" contenteditable>ஆண் / பெண்</span></td></tr>
 <tr><td class="label">பிறந்த தேதி</td><td>: <span class="editable" contenteditable>DD-MM-YYYY</span></td></tr>
 <tr><td class="label">பிறந்த நேரம்</td><td>: <span class="editable" contenteditable>00:00 AM</span></td></tr>
-<tr><td class="label">பிறந்த ஊர்</td><td>: <span class="editable" contenteditable>ஊர்</span></td></tr>
-<tr><td class="label">இருப்பிடம்</td><td>: <span class="editable" contenteditable>நகரம்</span></td></tr>
-<tr><td class="label">படிப்பு</td><td>: <span class="editable" contenteditable>படிப்பு</span></td></tr>
-<tr><td class="label">பணி விவரங்கள்</td><td>: <span class="editable" contenteditable>பணி</span></td></tr>
-<tr><td class="label">மாத வருமானம்</td><td>: <span class="editable" contenteditable>₹</span></td></tr>
+<tr><td class="label">பிறந்த ஊர்</td><td>: <span class="editable" contenteditable></span></td></tr>
+<tr><td class="label">இருப்பிடம்</td><td>: <span class="editable" contenteditable></span></td></tr>
+<tr><td class="label">படிப்பு</td><td>: <span class="editable" contenteditable></span></td></tr>
+<tr><td class="label">பணி விவரங்கள்</td><td>: <span class="editable" contenteditable></span></td></tr>
+<tr><td class="label">மாத வருமானம்</td><td>: <span class="editable" contenteditable></span></td></tr>
 </table>
 </div>
 
 <div class="right">
-<div class="photo-box" id="photoBox">Photo / PDF Upload</div>
+<div class="photo-box" id="photoBox">Photo / PDF</div>
 </div>
 </div>
 
@@ -157,8 +197,8 @@ td{
 <table>
 <tr><td class="label">ஜாதி</td><td>: <span class="editable" contenteditable></span></td></tr>
 <tr><td class="label">குலம் / கோத்திரம் / வீடு</td><td>: <span class="editable" contenteditable></span></td></tr>
-<tr><td class="label">உயரம்</td><td>: <span class="editable" contenteditable>cm</span></td></tr>
-<tr><td class="label">எடை</td><td>: <span class="editable" contenteditable>kg</span></td></tr>
+<tr><td class="label">உயரம்</td><td>: <span class="editable" contenteditable></span></td></tr>
+<tr><td class="label">எடை</td><td>: <span class="editable" contenteditable></span></td></tr>
 <tr><td class="label">நிறம்</td><td>: <span class="editable" contenteditable></span></td></tr>
 </table>
 
@@ -170,26 +210,25 @@ td{
 <tr><td class="label">தாய் பெயர்</td><td>: <span class="editable" contenteditable></span></td></tr>
 <tr><td class="label">தாய் பணி விபரம்</td><td>: <span class="editable" contenteditable></span></td></tr>
 <tr><td class="label">உடன் பிறந்தவர்கள்</td><td>: <span class="editable" contenteditable></span></td></tr>
-<tr><td class="label">தொலைப்பேசி எண்</td><td>: <span class="editable" contenteditable></span></td></tr>
-<tr><td class="label">வாட்ஸ்ஆப் எண்</td><td>: <span class="editable" contenteditable></span></td></tr>
-<tr><td class="label">முகவரி</td><td>: <span class="editable" contenteditable>முழு முகவரி</span></td></tr>
+<tr><td class="label">தொலைப்பேசி / வாட்ஸ்ஆப்</td><td>: <span class="editable" contenteditable></span></td></tr>
+<tr><td class="label">முகவரி</td><td>: <span class="editable" contenteditable></span></td></tr>
 <tr><td class="label">சொத்து விபரம்</td><td>: <span class="editable" contenteditable></span></td></tr>
 </table>
 
-<!-- JATHAGAM DETAILS -->
+<!-- JATHAGAM -->
 <div class="section-title">ஜாதக விவரம்</div>
 <table>
 <tr><td class="label">உதயாதி நாழிகை</td><td>: <span class="editable" contenteditable></span></td></tr>
-<tr><td class="label">சூர்ய உதயம்</td><td>: <span class="editable" contenteditable>06:00 AM</span></td></tr>
+<tr><td class="label">சூர்ய உதயம்</td><td>: <span class="editable" contenteditable></span></td></tr>
 </table>
 
 <!-- HOROSCOPE -->
 <div class="section-title">ஜாதக கட்டம்</div>
 <div class="horoscope">
 <div class="chart">
-<div contenteditable>குரு</div><div contenteditable>ராகு</div><div contenteditable></div><div contenteditable>புதன்</div>
-<div contenteditable>சனி</div><div class="center" contenteditable>ராசி</div><div class="center"></div><div contenteditable>மா</div>
-<div contenteditable>சூரியன்</div><div contenteditable>புத / சுக்</div><div contenteditable>லக்னம்</div><div contenteditable>செவ்வாய்</div>
+<div contenteditable></div><div contenteditable></div><div contenteditable></div><div contenteditable></div>
+<div contenteditable></div><div class="center" contenteditable>ராசி</div><div class="center"></div><div contenteditable></div>
+<div contenteditable></div><div contenteditable></div><div contenteditable></div><div contenteditable></div>
 <div contenteditable></div><div contenteditable></div><div contenteditable></div><div contenteditable></div>
 </div>
 
@@ -206,6 +245,7 @@ lakshmikrishna net centre
 </div>
 
 </div>
+</div>
 
 <script>
 function uploadPhoto(e){
@@ -218,13 +258,13 @@ function uploadPhoto(e){
         img.src=URL.createObjectURL(file);
         box.appendChild(img);
     }else{
-        box.innerHTML="📄 PDF Uploaded<br><small>"+file.name+"</small>";
+        box.innerHTML="PDF Uploaded";
     }
 }
 function exportPDF(){
     html2pdf().from(document.getElementById("pdfContent")).set({
         filename:"jathagam.pdf",
-        margin:10,
+        margin:5,
         html2canvas:{scale:2},
         jsPDF:{unit:"mm",format:"a4"}
     }).save();
