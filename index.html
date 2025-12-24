@@ -8,12 +8,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <style>
+/* ---------- TAMIL PRINT FONT FIX ---------- */
+@font-face{
+    font-family:"TamilPrint";
+    src:local("Noto Sans Tamil"),local("Latha"),local("Arial Unicode MS");
+}
+
+/* ---------- BASE ---------- */
 body{
     margin:0;
     background:#d6c6b5;
-    font-family:"Latha","Noto Sans Tamil",Arial;
+    font-family:"TamilPrint",Arial,sans-serif;
     color:#4a1f14;
 }
+
+/* ---------- ACTIONS ---------- */
 .actions{
     width:794px;
     margin:8px auto;
@@ -26,43 +35,76 @@ body{
     border:none;
     cursor:pointer;
 }
+
+/* ---------- PAGE (PRINT SAFE) ---------- */
 .page{
     width:794px;
-    height:1123px;
+    min-height:1040px;              /* printable A4 height */
     margin:0 auto;
     background:#fffaf4;
     border:3px double #7a1e12;
-    padding:14px 18px;
+    padding:12px 16px;
     box-sizing:border-box;
     overflow:hidden;
 }
 
-/* HEADER */
+/* ---------- HEADER ---------- */
 .top-header{
     text-align:center;
     font-size:18px;
     font-weight:bold;
     color:#7a1e12;
     border-bottom:2px solid #7a1e12;
-    margin-bottom:6px;
     padding-bottom:4px;
+    margin-bottom:6px;
 }
 
-/* TABLE */
+/* ---------- LAYOUT ---------- */
+.header{
+    display:flex;
+    gap:10px;
+}
+.left{flex:2}
+.right{flex:1;text-align:right}
+
+.photo-box{
+    width:150px;
+    height:190px;
+    border:2px solid #7a1e12;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fff;
+    font-size:11px;
+}
+
+/* ---------- TABLE ---------- */
 table{
     width:100%;
     border-collapse:collapse;
     font-size:13px;
 }
-td{padding:3px; vertical-align:top;}
-.label{width:190px; font-weight:bold;}
+td{
+    padding:3px;
+    vertical-align:top;
+    line-height:1.35;      /* Tamil fix */
+}
+.label{
+    width:190px;
+    font-weight:bold;
+}
 
+/* ---------- EDITABLE ---------- */
 .editable{
     border-bottom:1px dashed #7a1e12;
     padding:1px 3px;
 }
-.editable:focus{outline:none;background:#fff0e8;}
+.editable:focus{
+    outline:none;
+    background:#fff0e8;
+}
 
+/* ---------- SECTION TITLE ---------- */
 .section-title{
     text-align:center;
     font-size:15px;
@@ -73,36 +115,20 @@ td{padding:3px; vertical-align:top;}
     border:1px solid #7a1e12;
 }
 
-/* PHOTO */
-.header{
-    display:flex;
-    gap:10px;
-}
-.left{flex:2}
-.right{flex:1;text-align:right}
-.photo-box{
-    width:150px;
-    height:190px;
-    border:2px solid #7a1e12;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:11px;
-    background:#fff;
-}
-
-/* JATHAGAM */
+/* ---------- JATHAGAM (13 BOX) ---------- */
 .horoscope{
     display:flex;
     justify-content:space-between;
     margin-top:6px;
 }
+
 .jathagam{
     width:260px;
     height:260px;
     border:2px solid #7a1e12;
     position:relative;
 }
+
 .box{
     position:absolute;
     width:65px;
@@ -112,8 +138,10 @@ td{padding:3px; vertical-align:top;}
     align-items:center;
     justify-content:center;
     font-size:11px;
+    line-height:1.35;
 }
 .box:focus{outline:none;background:#fff0e8;}
+
 .center-box{
     position:absolute;
     top:65px; left:65px;
@@ -123,6 +151,8 @@ td{padding:3px; vertical-align:top;}
     align-items:center;
     justify-content:center;
     font-weight:bold;
+    font-size:13px;
+    line-height:1.35;
 }
 
 /* positions */
@@ -132,6 +162,7 @@ td{padding:3px; vertical-align:top;}
 .b9{top:195px;left:65px} .b10{top:195px;left:0}
 .b11{top:130px;left:0} .b12{top:65px;left:0}
 
+/* ---------- FOOTER ---------- */
 .footer{
     text-align:center;
     margin-top:6px;
@@ -141,8 +172,22 @@ td{padding:3px; vertical-align:top;}
     padding-top:4px;
 }
 
+/* ---------- PRINT FIX ---------- */
 @media print{
+    body{background:#fff;}
     .actions{display:none;}
+    .page{
+        transform:scale(0.95);          /* FORCE single page */
+        transform-origin:top left;
+        page-break-inside:avoid;
+    }
+    *{
+        letter-spacing:0.2px;
+        text-rendering:optimizeLegibility;
+        -webkit-print-color-adjust:exact;
+        print-color-adjust:exact;
+        page-break-inside:avoid;
+    }
 }
 </style>
 </head>
@@ -257,12 +302,23 @@ function uploadPhoto(e){
         box.innerHTML="PDF Uploaded";
     }
 }
+
 function exportPDF(){
-    html2pdf().from(document.getElementById("pdfContent")).set({
-        margin:[15,10,10,10],
+    const el=document.getElementById("pdfContent");
+    html2pdf().from(el).set({
+        margin:0,
         filename:"jathagam.pdf",
-        html2canvas:{scale:2,scrollY:0},
-        jsPDF:{unit:"mm",format:"a4"}
+        html2canvas:{
+            scale:2,
+            scrollY:0,
+            windowWidth:794,
+            windowHeight:1040
+        },
+        jsPDF:{
+            unit:"px",
+            format:[794,1040],
+            orientation:"portrait"
+        }
     }).save();
 }
 </script>
